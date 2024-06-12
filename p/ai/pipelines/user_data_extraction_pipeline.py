@@ -19,6 +19,7 @@ class UserDataExtractionPipeline:
 
         self.prompt_injector: PromptInjector = SimplePromptInjector(prompt)
         model: LLMModel = GeminiModel(key, gemini_model)
+        model.start_chat()
         self.model_handler: ModelHandler = BasicHandler(model, primer)
         self.extractor: Extractor = JsonExtractor(expected_fields)
 
@@ -28,3 +29,6 @@ class UserDataExtractionPipeline:
         out_processed = self.extractor.extract(model_out)
         print(out_processed)
         return out_processed
+
+    def __del__(self):
+        self.model_handler.model.end_chat()
