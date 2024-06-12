@@ -1,8 +1,6 @@
 import re
 from typing import List, Dict
 from ..extractor import Extractor
-from ..datetime_parser import DateTimeParser
-from pipeline.data_structures import Task
 
 
 class JsonExtractor(Extractor):
