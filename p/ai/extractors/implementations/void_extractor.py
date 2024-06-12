@@ -1,6 +1,5 @@
 from typing import List
 from ..extractor import Extractor
-from pipeline.data_structures import Task
 
 
 class VoidExtractor(Extractor):
@@ -9,5 +8,5 @@ class VoidExtractor(Extractor):
     This is useful when you want to skip the extraction step in the pipeline.
     Can be used for testing purposes.
     """
-    def extract_tasks(self, text: str) -> List[Task]:
+    def extract(self, text: str):
         return []

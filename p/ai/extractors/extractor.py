@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List
-from pipeline.data_structures import Task
+from typing import List, Dict
 
 
 class Extractor(ABC):
@@ -13,14 +12,14 @@ class Extractor(ABC):
     """
 
     @abstractmethod
-    def extract_tasks(self, text: str) -> List[Task]:
+    def extract(self, text: str) -> Dict[str, str]:
         """
-        Extracts tasks from the provided text.
+        Extracts data from the provided text.
 
         Args:
-            text (str): The text to parse for task information.
+            text (str): The text to parse for data.
 
         Returns:
-            List[Task]: A list of extracted Task objects.
+            Dict[str, str]: A dictionary of extracted data.
         """
         pass

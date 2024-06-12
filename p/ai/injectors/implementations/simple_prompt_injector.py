@@ -1,3 +1,5 @@
+from typing import Dict
+
 from ..prompt_injector import PromptInjector
 
 
@@ -9,5 +11,5 @@ class SimplePromptInjector(PromptInjector):
     def __init__(self, prompt_template: str):
         super().__init__(prompt_template)
 
-    def inject_prompt(self, data: str) -> str:
-        return self.prompt_template.format(data=data)
+    def inject_prompt(self, input_data: Dict[str, str]) -> str:
+        return self.prompt_template.format(**input_data)

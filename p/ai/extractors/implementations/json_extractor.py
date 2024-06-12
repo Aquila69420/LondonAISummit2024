@@ -16,7 +16,7 @@ class JsonExtractor(Extractor):
         self.key: [str] = key
         pass
 
-    def extract_tasks(self, text: str) -> Dict[str, str]:
+    def extract(self, text: str) -> Dict[str, str]:
         print("Extracting tasks from JSON text.")
 
         current_object = {}

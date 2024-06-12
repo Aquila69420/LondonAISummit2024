@@ -17,8 +17,14 @@ class UserDataExtractionPipeline:
         expected_fields = ['Date of Birth', 'Date joined company', 'Gender', 'Marital Status', 'Pension Status',
                            'No. of Children', 'Retirement Date', 'Retirement Type', 'Current Pension Amount']
 
-        self.prompt: PromptInjector = SimplePromptInjector(prompt)
+        self.prompt_injector: PromptInjector = SimplePromptInjector(prompt)
         model: LLMModel = GeminiModel(key, gemini_model)
         self.model_handler: ModelHandler = BasicHandler(model, primer)
         self.extractor: Extractor = JsonExtractor(expected_fields)
 
+    def process(self, input_data: str):
+        prompt = self.prompt_injector.inject_prompt({'data': input_data})
+        model_out = self.model_handler.send_message(prompt)
+        out_processed = self.extractor.extract(model_out)
+        print(out_processed)
+        return out_processed

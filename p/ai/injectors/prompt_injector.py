@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from typing import Dict
 
 
 class PromptInjector(ABC):
@@ -22,7 +23,7 @@ class PromptInjector(ABC):
         self.prompt_template: str = prompt_template
 
     @abstractmethod
-    def inject_prompt(self, data: str) -> str:
+    def inject_prompt(self, data: Dict[str, str]) -> str:
         """
         Injects data into the prompt template and returns the complete prompt.
 

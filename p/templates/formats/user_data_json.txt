@@ -1,4 +1,4 @@
-{
+{{
     "Date of Birth": "Date of birth of the individual",
     "Date joined company": "Date the individual joined the company",
     "Gender": "Gender of the individual",
@@ -8,4 +8,4 @@
     "Retirement Date": "Date the individual is expected to retire",
     "Retirement Type": "Type of retirement, Early, Normal, Late",
     "Current Pension Amount": "Current pension amount"
-}
+}}
