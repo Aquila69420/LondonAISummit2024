@@ -1,0 +1,4 @@
+{data}
+{ERF:templates\headers\generic_pension_assistant.txt}
+Extract all relevant pieces of information about pension revaluation form the data above in the format shown below.
+{ERF:templates\formats\understand_prt_out_format.txt}
