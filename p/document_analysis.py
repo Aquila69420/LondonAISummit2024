@@ -1,4 +1,3 @@
-from gemini_model import GeminiModel
 from custome_io import read_docx
 
 # Press the green button in the gutter to run the script.
