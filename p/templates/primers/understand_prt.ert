@@ -1,3 +1,3 @@
-{ERF:templates\primers\generic_pension_assistant.txt}
+{ERF:templates\headers\generic_pension_assistant.txt}
 Your job is to extract relevant pieces of information about pension revaluation form the given input to a more structured format and discard other not relevant data points.
 {ERF:templates\primers\primer_ack.txt}
