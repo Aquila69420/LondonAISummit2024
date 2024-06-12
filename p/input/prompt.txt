@@ -1,0 +1,16 @@
+Given the provided document outlining the pension calculation rules for "Example Pension Scheme (EPS)", identify the key elements and translate them into a set of mathematical formulae for calculating a person's pension. Here are the key elements to focus on:
+
+Member Profile: This includes factors like joining date, date of birth, scheme type, and retirement date.
+Pensionable Service: This is the length of service used to calculate the pension amount. It might be influenced by joining date and normal retirement date (NRD).
+Pension Base: This is the base amount used to calculate the pension. It could be a fixed amount or a function of salary.
+Benefit Factors: These are factors applied to the pension base to determine the final pension amount. They might depend on factors like scheme type, early/late retirement, or death benefits.
+Revaluation: This refers to how the pension amount is adjusted over time before and after retirement.
+Commutation: This is the option to take a lump sum payment instead of a regular pension.
+Extracting the Formulae:
+For each scenario (retirement, death before/after NRD), the LLM should analyze the document and provide the following:
+
+Conditions: A set of logical conditions based on member profile information (e.g., joining date > NRD).
+Pension Base Formula: A formula to calculate the pension base based on the member's profile and scheme rules.
+Benefit Factor: A value or formula to determine the benefit factor based on scheme type, retirement age, etc.
+Revaluation Formula: A formula to calculate the revaluation factor based on pre/post retirement and relevant dates.
+Final Pension Formula: Combine Pension Base, Benefit Factor, and Revaluation to get the final pension amount.
