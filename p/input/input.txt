@@ -1,0 +1,2 @@
+Member ID	Date of Birth	Date Joined Company	Gender	Marital Status	Spouse Date of Birth	Pension Status	No. of Children	Child 1 DOB	Child 2 DOB	Child 3 DOB	Retirement Date	Retirement Type
+1001	15/05/1960	01/07/1985	M	Married	02/11/1965	Pensioner	2	12/03/1990	29/8/1992		15/05/2025	Normal
