@@ -1,0 +1,24 @@
+from ..models import GeminiModel, LLMModel
+from ..model_handlers import BasicHandler, ModelHandler
+from ..injectors import SimplePromptInjector, PromptInjector
+from ..extractors import Extractor, JsonExtractor
+from erf import ERFEnvironment, ERFCompiler
+
+
+class UserDataExtractionPipeline:
+    """
+    This pipeline is responsible for extracting user data from any format to a structured from that follows JSON.
+    """
+
+    def __init__(self, key: str, gemini_model: str = "gemini-1.5-flash"):
+        erf_compiler = ERFCompiler(ERFEnvironment())
+        primer = erf_compiler.compile("templates\\primers\\user_input_extraction.ert")
+        prompt = erf_compiler.compile("templates\\prompts\\user_input_extraction.ert")
+        expected_fields = ['Date of Birth', 'Date joined company', 'Gender', 'Marital Status', 'Pension Status',
+                           'No. of Children', 'Retirement Date', 'Retirement Type', 'Current Pension Amount']
+
+        self.prompt: PromptInjector = SimplePromptInjector(prompt)
+        model: LLMModel = GeminiModel(key, gemini_model)
+        self.model_handler: ModelHandler = BasicHandler(model, primer)
+        self.extractor: Extractor = JsonExtractor(expected_fields)
+

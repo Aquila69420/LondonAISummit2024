@@ -8,15 +8,12 @@ class JsonExtractor(Extractor):
     Tries to extract tasks from the text assuming it tries to follow a JSON format (doesn't have to be valid JSON).
     """
 
-    def __init__(self, key: [str], key_map: Dict[str, str] | None = None):
+    def __init__(self, key: [str]):
         """
         Create a new JSON extracts, this extractor expects the output to look like JSON with specific keys
-        A key mop can be provided to map JSON key to the expected task field names
         :param key: List of keys that the JSON schema contains
-        :param key_map: Map of JSON keys to task field names, if matches exactly you dont have to provided one
         """
         self.key: [str] = key
-        self.key_map: Dict[str, str] | None = key_map
         pass
 
     def extract_tasks(self, text: str) -> Dict[str, str]:
