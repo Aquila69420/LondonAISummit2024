@@ -7,4 +7,4 @@ class SimplePromptInjector(PromptInjector):
     using string formatting and is expecting the template to have a placeholder called 'data'.
     """
     def inject_prompt(self, data: str) -> str:
-        return self.prompt_template.prompt_template.format(data=data)
+        return self.prompt_template.format(data=data)

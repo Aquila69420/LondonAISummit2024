@@ -19,7 +19,7 @@ class PromptInjector(ABC):
         Initializes the PromptInjector with a prompt template.
         :param prompt_template: The template used for generating prompts.
         """
-        self.prompt_template: PromptTemplate = prompt_template
+        self.prompt_template: str = prompt_template
 
     @abstractmethod
     def inject_prompt(self, data: str) -> str:
