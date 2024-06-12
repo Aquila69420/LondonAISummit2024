@@ -1,7 +1,8 @@
+from ..llm_model import LLMModel
 import google.generativeai as genai
 
 
-class GeminiModel:
+class GeminiModel(LLMModel):
     """
     API interface for the Gemini model.
     """
@@ -12,8 +13,8 @@ class GeminiModel:
         :param api_key: Key for the Gemini API.
         :param model_name: Name of the model to use, default is "gemini-1.5-flash" and it most match models available in the Gemini API.
         """
+        super().__init__(model_name)
         genai.configure(api_key=api_key)
-        self.model_name = model_name
         self.model = None
 
     def start_chat(self):

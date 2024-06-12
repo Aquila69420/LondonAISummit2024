@@ -19,31 +19,9 @@ class JsonExtractor(Extractor):
         self.key_map: Dict[str, str] | None = key_map
         pass
 
-    def _convert_obj_task(self, obj: Dict[str, str]) -> Task:
-        # Apply name mapping if one is give
-        if self.key_map is not None:
-            pobj = {}
-            for key in obj.keys():
-                if key not in self.key_map.keys(): # If no mapping exists for this key just carry it over
-                    pobj[key] = obj[key]
-                else:
-                    pobj[self.key_map[key]] = obj[key]
-        else:
-            pobj = obj
-
-        task = Task(
-            pobj['Name'],
-            pobj['Description'],
-            DateTimeParser.try_parse_date(pobj['DueDate']),
-            DateTimeParser.try_parse_date(pobj['DueTime'])
-        )
-
-        return task
-
-    def extract_tasks(self, text: str) -> List[Task]:
+    def extract_tasks(self, text: str) -> Dict[str, str]:
         print("Extracting tasks from JSON text.")
 
-        res = []
         current_object = {}
         missing_key = self.key.copy()
 
@@ -59,8 +37,6 @@ class JsonExtractor(Extractor):
                 break
 
             if len(missing_key) == 0:
-                res.append(current_object)
-                current_object = {}
-                missing_key = self.key.copy()
+                return current_object
 
-        return [self._convert_obj_task(obj) for obj in res]
+        return current_object
