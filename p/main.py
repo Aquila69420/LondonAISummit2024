@@ -13,6 +13,6 @@ def print_hi(name):
 if __name__ == '__main__':
     print_hi('PyCharm')
     pipe = UserDataExtractionPipeline("AIzaSyCO8QBl6pLBM3XIxh33voc0JlC5w0J6AAU")
-    i = "Tom not married, current pension 50000, tom is not a dad and has retired normally."
+    i = "Tom not married, current pension 50000, tom is a dad had a son Bob and daughter Elsa and has retired normally."
     a = pipe.process(i)
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
