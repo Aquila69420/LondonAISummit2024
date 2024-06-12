@@ -1,0 +1,11 @@
+{
+    "Date of Birth": "Date of birth of the individual",
+    "Date joined company": "Date the individual joined the company",
+    "Gender": "Gender of the individual",
+    "Marital Status": "Marital status of the individual",
+    "Pension Status": "Pension status of the individual, Pensioner, Deferred...",
+    "No. of Children": "Number of children the individual has",
+    "Retirement Date": "Date the individual is expected to retire",
+    "Retirement Type": "Type of retirement, Early, Normal, Late",
+    "Current Pension Amount": "Current pension amount"
+}

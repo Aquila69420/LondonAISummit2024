@@ -1,0 +1,7 @@
+[
+    {
+      "Criteria": "When and who to this adjacent should be assigned to",
+      "Adjustment about": "The about the pension should be adjusted as a percentage of the current pension stored as a float e.g. 0.1 for 10% increase",
+    },
+    // Add more items as needed
+]
