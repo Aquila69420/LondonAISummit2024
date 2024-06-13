@@ -33,7 +33,19 @@ class DataForRecommendation(Model):
     """
     processed_user_data: Dict[str, str]
     processed_scheme: str
-    current_year: str
+    current_year: int
+
+
+class DataFromChainRecommendation(Model):
+    """
+    Model for data to be used for recommendation x years into the future.
+
+    Attributes:
+        base_input (DataForRecommendation): The base input data.
+        chain_length (int): The length of the chain.
+    """
+    base_input: DataForRecommendation
+    chain_length: int
 
 
 class TextReply(Model):
