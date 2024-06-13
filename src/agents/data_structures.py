@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 from uagents import Model
 
 
@@ -66,3 +66,13 @@ class DictionaryReply(Model):
         dictionary (dict): The dictionary reply.
     """
     dictionary: Dict[str, str]
+
+
+class ChainDictReply(Model):
+    """
+    Model for replying to a chained request.
+
+        Attributes:
+        dictionary (list): Chained list of DictionaryReply, one for each reached hop
+    """
+    dict_chain: List[DictionaryReply]

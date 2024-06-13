@@ -44,7 +44,8 @@ async def message_handler(ctx: Context, sender: str, msg: TextReply):
     _processed_scheme_data = msg.text
     #print(_processed_scheme_data)
 
-
+call_made = False
+chained = False
 @agent.on_interval(period=10.0)
 async def send_message(ctx: Context):
     global _processed_user_data, _processed_scheme_data
@@ -53,3 +54,4 @@ async def send_message(ctx: Context):
                        DataForRecommendation(processed_user_data=_processed_user_data,
                                              processed_scheme=_processed_scheme_data,
                                              current_year="1987"), timeout=None, sync=True)
+
