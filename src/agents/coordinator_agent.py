@@ -45,13 +45,23 @@ async def message_handler(ctx: Context, sender: str, msg: TextReply):
     #print(_processed_scheme_data)
 
 call_made = False
-chained = False
+chained = True
 @agent.on_interval(period=10.0)
 async def send_message(ctx: Context):
-    global _processed_user_data, _processed_scheme_data
+    global _processed_user_data, _processed_scheme_data, call_made, chained
     if _processed_user_data is not None and _processed_scheme_data is not None:
-        await ctx.send(agents.recommendation_agent.RECOMMENDATION_AGENT_ADDRESS,
-                       DataForRecommendation(processed_user_data=_processed_user_data,
-                                             processed_scheme=_processed_scheme_data,
-                                             current_year="1987"), timeout=None, sync=True)
+        if call_made:
+            return
+        call_made = True
+        if not chained:
+            await ctx.send(agents.recommendation_agent.RECOMMENDATION_AGENT_ADDRESS,
+                           DataForRecommendation(processed_user_data=_processed_user_data,
+                                                 processed_scheme=_processed_scheme_data,
+                                                 current_year="1987"), timeout=None, sync=True)
+        else:
+            base = DataForRecommendation(processed_user_data=_processed_user_data,
+                                         processed_scheme=_processed_scheme_data,current_year="1987")
+            await ctx.send(agents.multi_year_chain_agent.MULTI_YEAR_CHAIN_ADDRESS,
+                           DataFromChainRecommendation(base_input=base, chain_length=5), timeout=None, sync=False)
+
 

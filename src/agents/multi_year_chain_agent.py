@@ -24,6 +24,7 @@ async def introduce_agent(ctx: Context):
 @agent.on_message(model=DataFromChainRecommendation)
 async def message_handler(ctx: Context, sender: str, msg: DataFromChainRecommendation):
     global _remaining_chain_length, _sender, _current_data, _recommendation_stack
+    print("----------------------------------------------")
     _recommendation_stack = []
     _sender = sender
     _remaining_chain_length = msg.chain_length - 1
