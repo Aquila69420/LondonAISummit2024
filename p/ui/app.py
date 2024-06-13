@@ -123,4 +123,5 @@ def index():
                             explanation=explanation, error_message=error_message)
 
 if __name__ == "__main__":
+    #threading.Thread(target=app.run, kwargs={"debug": False}).start()
     app.run(debug=False)
