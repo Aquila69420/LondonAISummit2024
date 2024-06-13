@@ -17,7 +17,7 @@ class JsonExtractor(Extractor):
         pass
 
     def extract(self, text: str) -> Dict[str, str]:
-        print("Extracting data to dictionary from in JSON like fashion")
+        #print("Extracting data to dictionary from in JSON like fashion")
 
         current_object = {}
         missing_key = self.key.copy()
