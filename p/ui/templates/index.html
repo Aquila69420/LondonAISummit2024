@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pension App</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script>
+    function triggerFileUpload() {
+      // Simulate a click on the hidden file input element
+      document.getElementById('user_data').click();
+      // Add a listener to the file input element (optional)
+      document.getElementById('user_data').addEventListener('change', function(event) {
+        // Get the uploaded file
+        const uploadedFile = event.target.files[0];
+        console.log("Uploaded file:");
+        console.log(uploadedFile);
+        // Call your process_user_data function (assuming it's defined in Flask)
+        process_user_data(uploadedFile);  // Replace with actual call
+      });
+    }
+    </script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-3" style="background-color: #293764; color: #fff; padding: 10px; border-radius: 5px;">
+          <div class="btn-group">
+            <input type="text" id="pension_scheme_path" name="pension_scheme_path" class="form-control" placeholder="Input pension scheme absolute file path here" style="width: 500px; height: 30px;"></input>
+            <!-- <form method="POST" enctype="multipart/form-data">
+              <button type="submit" class="file file-sm file-outline-light" onclick="document.getElementById('pension_scheme').click()">Upload Pension Scheme</button>
+              <input type="file" id="pension_scheme" name="pension_scheme" accept=".pdf,.docx,.txt,.doc" style="display: none;">
+            </form> -->
+            <input type="date" class="form-control form-control-sm" style="width: auto; margin-right: 10px;" id="selected_date" value="{{ selected_date }}">
+            <button type="submit" class="btn btn-sm btn-primary">Reevaluate pension for next year</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="datacard mb-3">
+      <div class="card-header align-button-header">  <h4>Raw User Data</h4>
+        <form action="/" method="post" enctype="multipart/form-data">
+            <button class="file file-sm file-outline-light" style="margin-left: 800px; height: 30px;" onclick="triggerFileUpload()">Upload User Data</button>
+            <input type="file" id="user_data" name="user_data" accept=".xlsx,.csv,.txt,.docx,.doc" style="display: none;">
+          </form>
+        <form action="/" method="post">
+          <button class="btn btn-sm btn-primary" style="margin-left: 50px; height: 30px;" id="process_data_button" name="process_data_button">Process Data</button>
+        </form>
+      </div>
+      <input type="text" id="user_data_input" class="form-control" placeholder="Input user data here" style="height: 30px;">
+    </div>
+  </div>
+
+  </br>
+  </br> 
+
+  <div class="col-md-6">
+    <div class="card mb-3">
+      <div class="card-header">
+        <h4>Modified User Data</h4>
+        </div>
+        {% if modified_data %}
+          <table>
+            <tr>
+              {% for key, value in modified_data %}
+                <th class="bordered-cell">{{ key }}</th>
+              {% endfor %}
+            </tr>
+            <tr>
+            {% for key, value in modified_data %}
+                <td class="bordered-cell"><input type="text" class="form-control" value="{{ value }}" id="{{ key }}"></td>
+            {% endfor %}
+          </tr>
+          </table>
+        {% endif %}
+    </div>
+  </div>
+
+  </br>
+  </br> 
+  </br>
+  </br>
+
+  <label id="current_pension" style="margin-left: 130px; background-color: #293764; color: #fff; padding: 10px; border-radius: 5px;">Current Pension: £{{ current_pension }}</label> <label id="reevaluated_pension" style="margin-left: 130px; background-color: #293764; color: #fff; padding: 10px; border-radius: 5px;">Re-evaluated Pension: £{{ reevaluated_pension }}</label> 
+  <label id="explanation" style="margin-left: 130px; background-color: #293764; color: #fff; padding: 10px; border-radius: 5px;">Calculation Explanation: {{ explanation }}</label>
+</body>
+</html>
