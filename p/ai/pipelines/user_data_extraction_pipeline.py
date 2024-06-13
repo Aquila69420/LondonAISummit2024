@@ -12,8 +12,8 @@ class UserDataExtractionPipeline:
 
     def __init__(self, key: str, gemini_model: str = "gemini-1.5-flash"):
         erf_compiler = ERFCompiler(ERFEnvironment())
-        primer = erf_compiler.compile("templates\\primers\\user_input_extraction.ert")
-        prompt = erf_compiler.compile("templates\\prompts\\user_input_extraction.ert")
+        primer = erf_compiler.compile("templates\\primers\\user_input_extraction.erf")
+        prompt = erf_compiler.compile("templates\\prompts\\user_input_extraction.erf")
         expected_fields = ['Date of Birth', 'Date joined company', 'Gender', 'Marital Status', 'Pension Status',
                            'No. of Children', 'Retirement Date', 'Retirement Type', 'Current Pension Amount']
 

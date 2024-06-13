@@ -11,8 +11,8 @@ class UnderstandPrtPipeline:
 
     def __init__(self, key: str, gemini_model: str = "gemini-1.5-flash"):
         erf_compiler = ERFCompiler(ERFEnvironment())
-        primer = erf_compiler.compile("templates\\primers\\understand_prt.ert")
-        prompt = erf_compiler.compile("templates\\prompts\\understand_prt.ert")
+        primer = erf_compiler.compile("templates\\primers\\understand_prt.erf")
+        prompt = erf_compiler.compile("templates\\prompts\\understand_prt.erf")
 
         self.prompt_injector: PromptInjector = SimplePromptInjector(prompt)
         model: LLMModel = GeminiModel(key, gemini_model)
