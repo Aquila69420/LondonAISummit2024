@@ -27,7 +27,6 @@ class UserDataExtractionPipeline:
         prompt = self.prompt_injector.inject_prompt({'data': input_data})
         model_out = self.model_handler.send_message(prompt)
         out_processed = self.extractor.extract(model_out)
-        print(out_processed)
         return out_processed
 
     def __del__(self):
