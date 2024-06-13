@@ -7,7 +7,6 @@ class LLMModel(ABC):
 
     Attributes:
         model_name (str): The name of the model.
-        primer (PrimingMessage): A priming message to initialize or set the context for the model.
 
     Methods:
         startChat(self): Starts a chat session.
