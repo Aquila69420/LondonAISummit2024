@@ -3,21 +3,30 @@ from datetime import datetime
 from flask_bootstrap import Bootstrap
 import pandas as pd
 
-def calculate_pension(raw_data, selected_date):
+rules=[] #pension scheme rules
+
+def compute(modified_data, selected_date):
+    # do something with rules to produce the below output dictionary
+    return {'Initial': '50000.0', 'Adjusted': '53750.0', 'Explanation': 'The provided information indicates the individual is a "Pensioner" with a "Current Pension Amount" of 50000.  Since the date is 1987, we can assume the pension is already in payment.  Given the lack of information about the pension\'s origin (GMP, pre/post 1997, etc.),  we must default to the most common scenario for pensions in payment in 1987.\n\nThe most common pension type in 1987 would be "Pre 6/4/1988 GMP, in payment". This is because Guaranteed Minimum Pensions (GMPs) were introduced in 1988, and before that, pensions were typically calculated based on a standard formula. \n\nTherefore, the appropriate pension readjustment is:\n\n* *Criteria:* "Pre 6/4/1988 GMP, in payment"\n* *Description:* "Fixed 7.5% increase"\n* *Adjustment about:*  The pension should be increased by 7.5%.\n* *Amount:* 0.075 \n\nThis means the individual\'s pension would be increased by 7.5% of their current pension amount (50000) in the following year. \n'}
+
+def calculate_pension(modified_data, selected_date):
     """
     Calculate the current pension, reevaluated pension, and explanation based on the raw data and selected date.
 
     Args:
-        raw_data (list): The raw user data.
+        modified_data (list): The raw user data.
         selected_date (datetime): The selected date.
 
     Returns:
         tuple: A tuple containing the current pension, reevaluated pension, and explanation.
     """
-    current_pension = "Not Calculated"
-    reevaluated_pension = "Not Calculated"
-    explanation = "Enter user data and select a date to calculate pension."
+    values = compute(modified_data, selected_date)
+    current_pension = values.get("Initial")
+    reevaluated_pension = values.get("Adjusted")
+    explanation = values.get("Explanation")
     return current_pension, reevaluated_pension, explanation
+
+#TODO: Get the path to pension scheme file, increase text input width, get fields on pressing reeval button, user data upload?
 
 def process_user_data(uploaded_file):
     """
@@ -93,7 +102,10 @@ def index():
             file = request.files["pension_scheme"]
             print(file)
         if "process_data_button" in request.form:
+            raw_data = request.form.get('user_data_input')
+            # modified_data = show_modified_data({raw_data})
             modified_data = show_modified_data({'Date of Birth': 'COULD NOT DETERMINE', 'Date joined company': 'COULD NOT DETERMINE', 'Gender': 'COULD NOT DETERMINE', 'Marital Status': 'Single', 'Pension Status': 'Pensioner', 'No. of Children': '2', 'Retirement Date': 'COULD NOT DETERMINE', 'Retirement Type': 'Normal', 'Current Pension Amount': '50000'})
+            
 
         if "user_data" in request.files: # Upload user data
             uploaded_file = request.files["user_data"]
@@ -107,18 +119,24 @@ def index():
                 else:
                     error_message = error_message or "Error processing user data."
 
-    selected_date_str = request.form.get("selected_date")
-    if selected_date_str:
-        try:
-            selected_date = datetime.strptime(selected_date_str, "%Y-%m-%d")
-        except ValueError:
-            error_message = "Invalid date format. Please use YYYY-MM-DD."
-
-    if raw_data and selected_date and not error_message:
-        current_pension, reevaluated_pension, explanation = calculate_pension(raw_data, selected_date)
+    if request.method == "GET":
+        # if "process_data_button" in request.form:
+        #     raw_data = request.form.get('user_data_input')
+        #     modified_data = show_modified_data({raw_data})
+        if "reevaluate_pension_button" in request.form:
+            pension_scheme_path = request.form.get('pension_scheme_path').trim()
+            selected_date_str = request.form.get("selected_date")
+            if selected_date_str:
+                try:
+                    selected_date = datetime.strptime(selected_date_str, "%d-%m-%Y")
+                except ValueError:
+                    error_message = "Invalid date format. Please use DD-MM-YYYY."
+            modified_data = request.form.get('modified_data')
+            if raw_data and selected_date and not error_message:
+                current_pension, reevaluated_pension, explanation = calculate_pension(modified_data, selected_date)
 
     return render_template("index.html", raw_data=raw_data, modified_data=modified_data, 
-                            selected_date=selected_date.strftime("%Y-%m-%d") if selected_date else None,
+                            selected_date=selected_date.strftime("%d-%m-%Y") if selected_date else None,
                             current_pension=current_pension, reevaluated_pension=reevaluated_pension,
                             explanation=explanation, error_message=error_message)
 
