@@ -39,11 +39,16 @@ async def message_handler(ctx: Context, sender: str, msg: DataFromChainRecommend
 async def message_handler(ctx: Context, sender: str, msg: DictionaryReply):
     global _processed_user_data, _recommendation_stack, _recommendation_stack, _sender, _remaining_chain_length, _current_data
     if sender == agents.recommendation_agent.RECOMMENDATION_AGENT_ADDRESS:
-        _recommendation_stack.append(msg.dictionary)
+        _recommendation_stack.append(msg)
         print(msg.dictionary)
+        try:
+            _current_data.processed_user_data['Current Pension Amount'] = str(float(msg.dictionary['Adjusted']))
+        except:
+            await ctx.send(_sender, ChainDictReply(dict_chain=_recommendation_stack), timeout=None, sync=True)
+            return
 
     if _remaining_chain_length == 0:
-        await ctx.send(_sender, ChainDictReply(dict_chain=_remaining_chain_length), timeout=None, sync=True)
+        await ctx.send(_sender, ChainDictReply(dict_chain=_recommendation_stack), timeout=None, sync=True)
     else:
         _remaining_chain_length -= 1
         await ctx.send(agents.recommendation_agent.RECOMMENDATION_AGENT_ADDRESS, _current_data, timeout=None, sync=True)
