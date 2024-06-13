@@ -3,11 +3,13 @@ from datetime import datetime
 from flask_bootstrap import Bootstrap
 import pandas as pd
 
+# from agents.coordinator_agent import *
+
 rules = None #pension scheme rules
 
 def compute(modified_data, selected_date):
     # do something with rules to produce the below output dictionary
-    return {'Initial': '50000.0', 'Adjusted': '53750.0', 'Explanation': 'The provided information indicates the individual is a "Pensioner" with a "Current Pension Amount" of 50000.  Since the date is 1987, we can assume the pension is already in payment.  Given the lack of information about the pension\'s origin (GMP, pre/post 1997, etc.),  we must default to the most common scenario for pensions in payment in 1987.\n\nThe most common pension type in 1987 would be "Pre 6/4/1988 GMP, in payment". This is because Guaranteed Minimum Pensions (GMPs) were introduced in 1988, and before that, pensions were typically calculated based on a standard formula. \n\nTherefore, the appropriate pension readjustment is:\n\n* *Criteria:* "Pre 6/4/1988 GMP, in payment"\n* *Description:* "Fixed 7.5% increase"\n* *Adjustment about:*  The pension should be increased by 7.5%.\n* *Amount:* 0.075 \n\nThis means the individual\'s pension would be increased by 7.5% of their current pension amount (50000) in the following year. \n'}
+    return [{'Initial': '50000.0', 'Adjusted': '53750.0', 'Explanation': 'The provided information indicates the individual is a "Pensioner" with a "Current Pension Amount" of 50000.  Since the date is 1987, we can assume the pension is already in payment.  Given the lack of information about the pension\'s origin (GMP, pre/post 1997, etc.),  we must default to the most common scenario for pensions in payment in 1987.\n\nThe most common pension type in 1987 would be "Pre 6/4/1988 GMP, in payment". This is because Guaranteed Minimum Pensions (GMPs) were introduced in 1988, and before that, pensions were typically calculated based on a standard formula. \n\nTherefore, the appropriate pension readjustment is:\n\n* *Criteria:* "Pre 6/4/1988 GMP, in payment"\n* *Description:* "Fixed 7.5% increase"\n* *Adjustment about:*  The pension should be increased by 7.5%.\n* *Amount:* 0.075 \n\nThis means the individual\'s pension would be increased by 7.5% of their current pension amount (50000) in the following year. \n'}]
 
 def calculate_pension(modified_data, selected_date):
     """
@@ -21,9 +23,21 @@ def calculate_pension(modified_data, selected_date):
         tuple: A tuple containing the current pension, reevaluated pension, and explanation.
     """
     values = compute(modified_data, selected_date)
-    current_pension = values.get("Initial")
-    reevaluated_pension = values.get("Adjusted")
-    explanation = values.get("Explanation")
+    # result = []
+    current_pension = "50000.0"
+    reevaluated_pension = "53750.0"
+    explanation = """The provided information indicates the individual is a "Pensioner" with a "Current Pension Amount" of 50000.  Since the date is 1987, we can assume the pension is already in payment.  Given the lack of information about the pension\'s origin (GMP, pre/post 1997, etc.),  we must default to the most common scenario for pensions in payment in 1987.\n\nThe most common pension type in 1987 would be "Pre 6/4/1988 GMP, in payment". This is because Guaranteed Minimum Pensions (GMPs) were introduced in 1988, and before that, pensions were typically calculated based on a standard formula. \n\nTherefore, the appropriate pension readjustment is:\n\n* *Criteria:* "Pre 6/4/1988 GMP, in payment"\n* *Description:* "Fixed 7.5% increase"\n* *Adjustment about:*  The pension should be increased by 7.5%.\n* *Amount:* 0.075 \n\nThis means the individual\'s pension would be increased by 7.5% of their current pension amount (50000) in the following year. \n"""
+    vars['current_pension'] = current_pension
+    vars['reevaluated_pension'] = reevaluated_pension
+    vars['explanation'] = explanation
+    # for value in values:
+    #     current_pension = "50000.0"
+    #     reevaluated_pension = "53750.0"
+    #     explanation = 'The provided information indicates the individual is a "Pensioner" with a "Current Pension Amount" of 50000.  Since the date is 1987, we can assume the pension is already in payment.  Given the lack of information about the pension\'s origin (GMP, pre/post 1997, etc.),  we must default to the most common scenario for pensions in payment in 1987.\n\nThe most common pension type in 1987 would be "Pre 6/4/1988 GMP, in payment". This is because Guaranteed Minimum Pensions (GMPs) were introduced in 1988, and before that, pensions were typically calculated based on a standard formula. \n\nTherefore, the appropriate pension readjustment is:\n\n* *Criteria:* "Pre 6/4/1988 GMP, in payment"\n* *Description:* "Fixed 7.5% increase"\n* *Adjustment about:*  The pension should be increased by 7.5%.\n* *Amount:* 0.075 \n\nThis means the individual\'s pension would be increased by 7.5% of their current pension amount (50000) in the following year. \n'
+    #     # current_pension = value.get("Initial")
+    #     # reevaluated_pension = value.get("Adjusted")
+    #     # explanation = value.get("Explanation")
+    #     result.append((current_pension, reevaluated_pension, explanation))
     return current_pension, reevaluated_pension, explanation
 
 #TODO: Get the path to pension scheme file, increase text input width, get fields on pressing reeval button, user data upload?
@@ -71,6 +85,11 @@ Bootstrap(app)
 
 vars={}
 
+# def agentify_raw_data(raw_data):
+#     introduce_agent(raw_data, "IBP_Problemstatement.docx")
+#     processed_user_data = get_processed_user_data()
+#     recommendation = get_recommendation()
+
 @app.errorhandler(400)
 def bad_request(error):
     """
@@ -108,7 +127,8 @@ def index():
             print("process_data_button clicked")
             raw_data = request.form.get('user_data_input')
             vars['raw_data'] = raw_data
-            # modified_data = show_modified_data({raw_data})
+            
+            # modified_data = show_modified_data({agentify_raw_data(raw_data)})
             modified_data = show_modified_data({'Date of Birth': 'COULD NOT DETERMINE', 'Date joined company': 'COULD NOT DETERMINE', 'Gender': 'COULD NOT DETERMINE', 'Marital Status': 'Single', 'Pension Status': 'Pensioner', 'No. of Children': '2', 'Retirement Date': 'COULD NOT DETERMINE', 'Retirement Type': 'Normal', 'Current Pension Amount': '50000'})
             vars['modified_data'] = modified_data
             print('raw_data', vars.get('raw_data'))
@@ -127,7 +147,6 @@ def index():
             if selected_date_str:
                 try:
                     selected_date = datetime.strptime(selected_date_str, "%Y-%m-%d")
-                    # print("date", selected_date)
                     vars['selected_date']=selected_date.strftime("%Y-%m-%d") if selected_date else None
                     # print("date in vars", vars.get('selected_date'))
                 except ValueError:
@@ -135,12 +154,15 @@ def index():
             raw_data = request.form.get('user_data_input')
             modified_data = request.form.get('modified_data')
             vars['modified_data'] = modified_data
-            if raw_data and selected_date and not error_message:
-                current_pension, reevaluated_pension, explanation = calculate_pension(modified_data, selected_date)
             
-            vars['current_pension']=current_pension
-            vars['reevaluated_pension']=reevaluated_pension
-            vars['explanation']=explanation
+            calc = calculate_pension(modified_data, selected_date)
+            current_pension, reevaluated_pension, explanation = calc
+            print("output", calc)
+            explanation = """The provided information indicates the individual is a "Pensioner" with a "Current Pension Amount" of 50000. Since the date is 1987, we can assume the pension is already in payment.  Given the lack of information about the pension\'s origin (GMP, pre/post 1997, etc.),  we must default to the most common scenario for pensions in payment in 1987.\n\nThe most common pension type in 1987 would be "Pre 6/4/1988 GMP, in payment". This is because Guaranteed Minimum Pensions (GMPs) were introduced in 1988, and before that, pensions were typically calculated based on a standard formula. \n\nTherefore, the appropriate pension readjustment is:\n\n* *Criteria:* "Pre 6/4/1988 GMP, in payment"\n* *Description:* "Fixed 7.5% increase"\n* *Adjustment about:*  The pension should be increased by 7.5%.\n* *Amount:* 0.075 \n\nThis means the individual\'s pension would be increased by 7.5% of their current pension amount (50000) in the following year. \n"""
+            vars['explanation'] = explanation
+            # vars['current_pension']=current_pension
+            # vars['reevaluated_pension']=reevaluated_pension
+            # vars['explanation']=explanation
             
             print('pension_scheme_path', vars.get('pension_scheme_path'))
             print('selected_date', vars.get('selected_date'))
