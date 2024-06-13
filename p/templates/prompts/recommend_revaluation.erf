@@ -1,5 +1,6 @@
 {user_data}
 {prt_data}
 {ERF:templates\headers\generic_pension_assistant.txt}
+Today is {ERF:year} we need the readjustment of the pension for the next year.
 Looking at the available user data which pension readjustment do you think should be applied, the answer MUST be given in the format below:
 {ERF:templates\formats\recommend_revaluation.txt}

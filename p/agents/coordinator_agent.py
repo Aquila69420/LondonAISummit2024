@@ -51,4 +51,5 @@ async def send_message(ctx: Context):
     if _processed_user_data is not None and _processed_scheme_data is not None:
         await ctx.send(agents.recommendation_agent.RECOMMENDATION_AGENT_ADDRESS,
                        DataForRecommendation(processed_user_data=_processed_user_data,
-                                             processed_scheme=_processed_scheme_data), timeout=None, sync=True)
+                                             processed_scheme=_processed_scheme_data,
+                                             current_year="1987"), timeout=None, sync=True)

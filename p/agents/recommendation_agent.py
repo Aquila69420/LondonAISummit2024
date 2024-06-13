@@ -16,7 +16,7 @@ async def introduce_agent(ctx: Context):
 @agent.on_message(model=DataForRecommendation)
 async def message_handler(ctx: Context, sender: str, msg: DataForRecommendation):
     ctx.logger.info(f"Received message from {sender}: {msg.processed_user_data}")
-    pipe = RecommendRevaluationPipeline("AIzaSyCO8QBl6pLBM3XIxh33voc0JlC5w0J6AAU")
+    pipe = RecommendRevaluationPipeline("AIzaSyCO8QBl6pLBM3XIxh33voc0JlC5w0J6AAU", msg.current_year)
     out = pipe.process(str(msg.processed_user_data), msg.processed_scheme)
 
     ####################################

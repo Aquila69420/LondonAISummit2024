@@ -12,8 +12,10 @@ class RecommendRevaluationPipeline:
     A pipeline responsible for recommending revaluation of a user's pension.
     """
 
-    def __init__(self, key: str, gemini_model: str = "gemini-1.5-flash"):
-        erf_compiler = ERFCompiler(ERFEnvironment())
+    def __init__(self, key: str, year: str, gemini_model: str = "gemini-1.5-flash"):
+        efr_env = ERFEnvironment()
+        efr_env.env_vars['year'] = year
+        erf_compiler = ERFCompiler(efr_env)
         primer = erf_compiler.compile("templates\\primers\\recommend_revaluation.erf")
         prompt = erf_compiler.compile("templates\\prompts\\recommend_revaluation.erf")
         self.explain_prompt = erf_compiler.compile("templates\\prompts\\explain.txt")

@@ -29,9 +29,11 @@ class DataForRecommendation(Model):
     Attributes:
         processed_user_data (Dict[str, str]): The processed user data.
         processed_scheme (str): The processed pension scheme data.
+        current_year (str): The current year.
     """
     processed_user_data: Dict[str, str]
     processed_scheme: str
+    current_year: str
 
 
 class TextReply(Model):
