@@ -34,8 +34,10 @@
               <button type="submit" class="file file-sm file-outline-light" onclick="document.getElementById('pension_scheme').click()">Upload Pension Scheme</button>
               <input type="file" id="pension_scheme" name="pension_scheme" accept=".pdf,.docx,.txt,.doc" style="display: none;">
             </form> -->
-            <input type="date" class="form-control form-control-sm" style="width: auto; margin-right: 10px;" id="selected_date" value="{{ selected_date }}">
-            <button type="submit" class="btn btn-sm btn-primary">Reevaluate pension for next year</button>
+            <form method="GET">
+              <input type="date" class="form-control form-control-sm" style="width: auto; margin-right: 10px;" id="selected_date" name="selected_date" value="{{ selected_date }}">
+              <button type="submit" name="reevaluate_pension_button" id="reevaluate_pension_button" class="btn btn-sm btn-primary">Reevaluate pension for next year</button>
+            </form>
           </div>
         </div>
       </div>
@@ -53,7 +55,7 @@
           <button class="btn btn-sm btn-primary" style="margin-left: 50px; height: 30px;" id="process_data_button" name="process_data_button">Process Data</button>
         </form>
       </div>
-      <input type="text" id="user_data_input" class="form-control" placeholder="Input user data here" style="height: 30px;">
+      <input type="text" id="user_data_input" name="user_data_input" class="form-control" placeholder="Input user data here" style="height: 30px;">
     </div>
   </div>
 

@@ -12,6 +12,7 @@ body {
 
 .form-control {
     background-color: rgb(41, 55, 100);
+    width: 100%;
     color: rgb(255, 255, 255);
     border-width: initial;
     border-style: none;
