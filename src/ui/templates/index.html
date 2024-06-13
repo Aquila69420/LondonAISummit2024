@@ -36,7 +36,7 @@
                       </form> -->
                     <form action="/" method="post">
                       <input type="text" id="user_data_input" name="user_data_input" class="form-control" placeholder="Input user data here" style="height: 30px;">
-                      <button class="btn btn-sm btn-primary" style="margin-left: 50px; height: 30px;" id="process_data_button" name="process_data_button">Process Data</button>
+                      <button class="btn btn-sm btn-primary" style="margin-left: 50px; height: 40px;" id="process_data_button" name="process_data_button">Process Data</button>
                     </form>
                   </div>
                   
@@ -74,12 +74,15 @@
               </br>
             
               <label id="current_pension" style="margin-left: 130px; background-color: #293764; color: #fff; padding: 10px; border-radius: 5px;">Current Pension: £{{ current_pension }}</label> <label id="reevaluated_pension" style="margin-left: 130px; background-color: #293764; color: #fff; padding: 10px; border-radius: 5px;">Re-evaluated Pension: £{{ reevaluated_pension }}</label> 
-              <label id="explanation" style="margin-left: 130px; background-color: #293764; color: #fff; padding: 10px; border-radius: 5px;">Calculation Explanation: {{ explanation }}</label>
+              </br>
+              </br>
+              
             </form>
           </div>
         </div>
       </div>
     </div>
+    <p id="explanation" style="margin-left: 130px; background-color: #293764; color: #fff; padding: 10px; border-radius: 5px;">Calculation Explanation: <br> {{ explanation|escape }}</p>
   </div>
 
   
