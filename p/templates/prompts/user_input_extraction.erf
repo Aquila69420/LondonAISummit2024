@@ -1,4 +1,4 @@
 {data}
 {ERF:templates\headers\generic_pension_assistant.txt}
-Extract important information from the user given above and put in the the following format (is something is missing or not clear but COULD NOT DETERMINE):
+Extract important information from the user given above and put in the the following format (is something is missing or not clear but COULD NOT DETERMINE) it most be exactly in the format below with no comment or extra information:
 {ERF:templates\formats\user_data_json.txt}
