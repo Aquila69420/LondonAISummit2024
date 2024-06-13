@@ -62,6 +62,6 @@ async def send_message(ctx: Context):
             base = DataForRecommendation(processed_user_data=_processed_user_data,
                                          processed_scheme=_processed_scheme_data,current_year="1987")
             await ctx.send(agents.multi_year_chain_agent.MULTI_YEAR_CHAIN_ADDRESS,
-                           DataFromChainRecommendation(base_input=base, chain_length=5), timeout=None, sync=False)
+                           DataFromChainRecommendation(base_input=base, chain_length=3), timeout=None, sync=False)
 
 
