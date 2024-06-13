@@ -1,6 +1,5 @@
 {user_data}
 {prt_data}
 {ERF:templates\headers\generic_pension_assistant.txt}
-Looking at the available user data which pension readjustment would do you think should be applied.
-Give your answer in the following format:
+Looking at the available user data which pension readjustment do you think should be applied, the answer MUST be given in the format below:
 {ERF:templates\formats\recommend_revaluation.txt}
