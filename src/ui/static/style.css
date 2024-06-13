@@ -10,6 +10,13 @@ body {
     display: none;
 }
 
+.explanation-text {
+    font-size: 10px;
+    text-wrap: wrap;
+    line-height: 1.5;
+    padding: 10px;
+  }
+
 .form-control {
     background-color: rgb(41, 55, 100);
     width: 100%;
