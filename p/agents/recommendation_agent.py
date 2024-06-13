@@ -45,7 +45,7 @@ async def message_handler(ctx: Context, sender: str, msg: DataForRecommendation)
     # Stitch the reply together #
     #############################
     res = {
-        "Initial": out['Current Pension Amount'] if 'Current Pension Amount' in out else "Missing",
+        "Initial": initial_pension if initial_pension is not None else "Missing",
         "Adjusted": recalculation if recalculation is not None else "Not enough data to calculate",
         "Explanation": explanation
     }

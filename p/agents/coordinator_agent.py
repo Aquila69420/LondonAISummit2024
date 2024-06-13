@@ -33,7 +33,7 @@ async def message_handler(ctx: Context, sender: str, msg: DictionaryReply):
     if sender == agents.user_input_agent.USER_INPUT_AGENT_ADDRESS:
         _processed_user_data = msg.dictionary
         #print(_processed_user_data)
-    elif sender == agents.pension_scheme_agent.PENSION_SCHEME_ADDRESS:
+    elif sender == agents.recommendation_agent.RECOMMENDATION_AGENT_ADDRESS:
         _recommendation = msg.dictionary
         print(_recommendation)
 
@@ -45,10 +45,10 @@ async def message_handler(ctx: Context, sender: str, msg: TextReply):
     #print(_processed_scheme_data)
 
 
-@agent.on_interval(period=5.0)
+@agent.on_interval(period=10.0)
 async def send_message(ctx: Context):
     global _processed_user_data, _processed_scheme_data
     if _processed_user_data is not None and _processed_scheme_data is not None:
         await ctx.send(agents.recommendation_agent.RECOMMENDATION_AGENT_ADDRESS,
                        DataForRecommendation(processed_user_data=_processed_user_data,
-                                             processed_scheme=_processed_scheme_data), timeout=None, sync=False)
+                                             processed_scheme=_processed_scheme_data), timeout=None, sync=True)
