@@ -16,14 +16,17 @@ class GeminiModel(LLMModel):
         super().__init__(model_name)
         genai.configure(api_key=api_key)
         self.model = None
+        self.chat = None
 
     def start_chat(self):
         self.model = genai.GenerativeModel(self.model_name)
+        self.chat = self.model.start_chat()
 
     def end_chat(self):
+        self.chat = None
         self.model = None
 
     def send_message(self, message: str) -> str:
         assert self.model is not None, "Model is not initialized. Call start_chat() before sending messages."
-        response = self.model.generate_content(message)
+        response = self.chat.send_message(message)
         return response.text

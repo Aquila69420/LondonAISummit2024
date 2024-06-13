@@ -36,10 +36,10 @@ async def message_handler(ctx: Context, sender: str, msg: DataForRecommendation)
     #######################################################
     # Try to create the explanation for the agents action #
     #######################################################
-    criteria = out['Criteria'] if 'Criteria' in out else ""
-    description = out['Description'] if 'Description' in out else ""
-    adjustment = out['Adjustment about'] if 'Adjustment about' in out else ""
-    explanation = f"{criteria}\n{description}\n{adjustment}"
+    # criteria = out['Criteria'] if 'Criteria' in out else ""
+    # description = out['Description'] if 'Description' in out else ""
+    # adjustment = out['Adjustment about'] if 'Adjustment about' in out else ""
+    # explanation = f"{criteria}\n{description}\n{adjustment} + {out['Explanation']}"
 
     #############################
     # Stitch the reply together #
@@ -47,7 +47,7 @@ async def message_handler(ctx: Context, sender: str, msg: DataForRecommendation)
     res = {
         "Initial": initial_pension if initial_pension is not None else "Missing",
         "Adjusted": recalculation if recalculation is not None else "Not enough data to calculate",
-        "Explanation": explanation
+        "Explanation": out['Explanation']
     }
 
     await ctx.send(sender, DictionaryReply(dictionary=res), timeout=None, sync=True)

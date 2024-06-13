@@ -16,6 +16,7 @@ class RecommendRevaluationPipeline:
         erf_compiler = ERFCompiler(ERFEnvironment())
         primer = erf_compiler.compile("templates\\primers\\recommend_revaluation.erf")
         prompt = erf_compiler.compile("templates\\prompts\\recommend_revaluation.erf")
+        self.explain_prompt = erf_compiler.compile("templates\\prompts\\explain.txt")
         expected_fields = ['Criteria', 'Description', 'Adjustment about', 'Amount']
 
         self.prompt_injector: PromptInjector = SimplePromptInjector(prompt)
@@ -28,6 +29,7 @@ class RecommendRevaluationPipeline:
         prompt = self.prompt_injector.inject_prompt({'user_data': input_data, 'prt_data': prt_data})
         model_out = self.model_handler.send_message(prompt)
         out_processed = self.extractor.extract(model_out)
+        out_processed['Explanation'] = self.model_handler.send_message(self.explain_prompt)
         return out_processed
 
     def __del__(self):
