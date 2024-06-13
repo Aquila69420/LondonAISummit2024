@@ -1,5 +1,5 @@
 from uagents import Agent, Context
-from .data_structures import DataForRecommendation, TextReply
+from .data_structures import DataForRecommendation, DictionaryReply
 from ai import RecommendRevaluationPipeline
 
 RECOMMENDATION_AGENT_ADDRESS: str | None = None
@@ -15,9 +15,9 @@ async def introduce_agent(ctx: Context):
 
 @agent.on_message(model=DataForRecommendation)
 async def message_handler(ctx: Context, sender: str, msg: DataForRecommendation):
-    ctx.logger.info(f"Received message from {sender}: {msg.processed_user_data}, {msg.processed_scheme}")
+    ctx.logger.info(f"Received message from {sender}: {msg.processed_user_data}")
     pipe = RecommendRevaluationPipeline("AIzaSyCO8QBl6pLBM3XIxh33voc0JlC5w0J6AAU")
-    out = pipe.process(msg.processed_user_data, msg.processed_scheme)
+    out = pipe.process(str(msg.processed_user_data), msg.processed_scheme)
 
     ####################################
     # Try to calculate the new pension #
@@ -26,9 +26,9 @@ async def message_handler(ctx: Context, sender: str, msg: DataForRecommendation)
     adjustment = None
     recalculation = None
     try:
-        initial_pension = float(out['Current Pension Amount'])
+        initial_pension = float(msg.processed_user_data['Current Pension Amount'])
         adjustment = float(out['Amount'])
-    except ValueError:
+    except KeyError:
         pass
     if initial_pension is not None and adjustment is not None:
         recalculation = initial_pension * (1 + adjustment)
@@ -50,7 +50,7 @@ async def message_handler(ctx: Context, sender: str, msg: DataForRecommendation)
         "Explanation": explanation
     }
 
-    await ctx.send(sender, TextReply(text=res), timeout=None, sync=True)
+    await ctx.send(sender, DictionaryReply(dictionary=res), timeout=None, sync=True)
 
 
 def run():

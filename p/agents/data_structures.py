@@ -27,10 +27,10 @@ class DataForRecommendation(Model):
     Model for data to be used for recommendation.
 
     Attributes:
-        processed_user_data (str): The processed user data.
+        processed_user_data (Dict[str, str]): The processed user data.
         processed_scheme (str): The processed pension scheme data.
     """
-    processed_user_data: str
+    processed_user_data: Dict[str, str]
     processed_scheme: str
 
 
