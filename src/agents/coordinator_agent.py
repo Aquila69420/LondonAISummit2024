@@ -38,14 +38,22 @@ async def message_handler(ctx: Context, sender: str, msg: DictionaryReply):
         print(_recommendation)
 
 
+@agent.on_message(model=ChainDictReply)
+async def message_handler(ctx: Context, sender: str, msg: DictionaryReply):
+    print(msg)
+
+
 @agent.on_message(model=TextReply)
 async def message_handler(ctx: Context, sender: str, msg: TextReply):
     global _processed_scheme_data
     _processed_scheme_data = msg.text
     #print(_processed_scheme_data)
 
+
 call_made = False
 chained = True
+
+
 @agent.on_interval(period=10.0)
 async def send_message(ctx: Context):
     global _processed_user_data, _processed_scheme_data, call_made, chained
@@ -60,8 +68,6 @@ async def send_message(ctx: Context):
                                                  current_year="1987"), timeout=None, sync=True)
         else:
             base = DataForRecommendation(processed_user_data=_processed_user_data,
-                                         processed_scheme=_processed_scheme_data,current_year="1987")
+                                         processed_scheme=_processed_scheme_data, current_year="1987")
             await ctx.send(agents.multi_year_chain_agent.MULTI_YEAR_CHAIN_ADDRESS,
                            DataFromChainRecommendation(base_input=base, chain_length=3), timeout=None, sync=False)
-
-
