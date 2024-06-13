@@ -13,21 +13,21 @@ def print_hi(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    pipe = UserDataExtractionPipeline("AIzaSyCO8QBl6pLBM3XIxh33voc0JlC5w0J6AAU")
-    i = "Tom not married, current pension 50000, tom is a dad had a son Bob and daughter Elsa and has retired normally."
-    a = pipe.process(i)
-    print(a)
+    #pipe = UserDataExtractionPipeline("AIzaSyCO8QBl6pLBM3XIxh33voc0JlC5w0J6AAU")
+    #i = "Tom not married, current pension 50000, tom is a dad had a son Bob and daughter Elsa and has retired normally."
+    #a = pipe.process(i)
+    #print(a)
 
-    pipe = UnderstandPrtPipeline("AIzaSyCO8QBl6pLBM3XIxh33voc0JlC5w0J6AAU")
-    i = read_docx("input/IBP_Problemstatement.docx")
-    b = pipe.process(i)
+    #pipe = UnderstandPrtPipeline("AIzaSyCO8QBl6pLBM3XIxh33voc0JlC5w0J6AAU")
+    #i = read_docx("input/IBP_Problemstatement.docx")
+    #b = pipe.process(i)
     #print(b)
 
-    pipe = RecommendRevaluationPipeline("AIzaSyCO8QBl6pLBM3XIxh33voc0JlC5w0J6AAU")
-    c = pipe.process(a, b)
-    print(c)
+    #pipe = RecommendRevaluationPipeline("AIzaSyCO8QBl6pLBM3XIxh33voc0JlC5w0J6AAU")
+    #c = pipe.process(a, b)
+    #print(c)
 
-    print(f"Before: {float(a['Current Pension Amount'])}")
-    print(f"Adjustment: {float(c['Amount'])}")
-    print(f"After: {float(a['Current Pension Amount']) * (1 + float(c['Amount']))}")
+    #print(f"Before: {float(a['Current Pension Amount'])}")
+    #print(f"Adjustment: {float(c['Amount'])}")
+    #print(f"After: {float(a['Current Pension Amount']) * (1 + float(c['Amount']))}")
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

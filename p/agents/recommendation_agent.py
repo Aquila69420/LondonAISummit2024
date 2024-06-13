@@ -13,7 +13,7 @@ async def introduce_agent(ctx: Context):
 
 
 @agent.on_message(model=DataForRecommendation)
-async def bob_message_handler(ctx: Context, sender: str, msg: DataForRecommendation):
+async def message_handler(ctx: Context, sender: str, msg: DataForRecommendation):
     print(f"user_input_agent received message from {sender}: {msg.processed_user_data}, {msg.processed_scheme}")
     pipe = RecommendRevaluationPipeline("AIzaSyCO8QBl6pLBM3XIxh33voc0JlC5w0J6AAU")
     out = pipe.process(msg.processed_user_data, msg.processed_scheme)
@@ -44,8 +44,8 @@ async def bob_message_handler(ctx: Context, sender: str, msg: DataForRecommendat
     # Stitch the reply together #
     #############################
     res = {
-        "Initial": out['Current Pension Amount'],
-        "Adjusted": recalculation,
+        "Initial": out['Current Pension Amount'] if 'Current Pension Amount' in out else "Missing",
+        "Adjusted": recalculation if recalculation is not None else "Not enough data to calculate",
         "Explanation": explanation
     }
 

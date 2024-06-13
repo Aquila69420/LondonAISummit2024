@@ -13,7 +13,7 @@ async def introduce_agent(ctx: Context):
 
 
 @agent.on_message(model=UserRawData)
-async def bob_message_handler(ctx: Context, sender: str, msg: UserRawData):
+async def message_handler(ctx: Context, sender: str, msg: UserRawData):
     print(f"user_input_agent received message from {sender}: {msg.raw_user_data}")
     pipe = UserDataExtractionPipeline("AIzaSyCO8QBl6pLBM3XIxh33voc0JlC5w0J6AAU")
     out = pipe.process(msg.raw_user_data)
