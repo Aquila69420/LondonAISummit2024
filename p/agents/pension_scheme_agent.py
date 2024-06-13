@@ -8,7 +8,7 @@ agent = Agent(name="pension_scheme_agent", seed="pension_scheme_agent recovery p
 
 @agent.on_event("startup")
 async def introduce_agent(ctx: Context):
-    print("pension_scheme_agent started")
+    ctx.logger.info("started")
     global PENSION_SCHEME_ADDRESS
     PENSION_SCHEME_ADDRESS = agent.address
 

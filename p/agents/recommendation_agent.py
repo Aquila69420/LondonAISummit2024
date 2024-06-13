@@ -8,14 +8,14 @@ agent = Agent(name="recommendation_agent", seed="recommendation_agent recovery p
 
 @agent.on_event("startup")
 async def introduce_agent(ctx: Context):
-    print("recommendation_agent started")
+    ctx.logger.info("started")
     global RECOMMENDATION_AGENT_ADDRESS
     RECOMMENDATION_AGENT_ADDRESS = agent.address
 
 
 @agent.on_message(model=DataForRecommendation)
 async def message_handler(ctx: Context, sender: str, msg: DataForRecommendation):
-    print(f"user_input_agent received message from {sender}: {msg.processed_user_data}, {msg.processed_scheme}")
+    ctx.logger.info(f"Received message from {sender}: {msg.processed_user_data}, {msg.processed_scheme}")
     pipe = RecommendRevaluationPipeline("AIzaSyCO8QBl6pLBM3XIxh33voc0JlC5w0J6AAU")
     out = pipe.process(msg.processed_user_data, msg.processed_scheme)
 
