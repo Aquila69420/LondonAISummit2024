@@ -1,4 +1,4 @@
-# LondonAISummit2024
+# AI Summit London 2024 Hackathon
 ## Setup & Dependencies
 To set up all the dependencies for this project simple crate a new python virtual environment and install the following packages:
 
