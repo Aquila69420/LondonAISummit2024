@@ -1,4 +1,6 @@
-from uagents import Agent, Bureau, Context, Model
+from uagents import Agent, Context
+from data_structures import UserRawData, DictionaryReply
+from ai import UserDataExtractionPipeline
 
 USER_INPUT_AGENT_ADDRESS: str | None = None
 agent = Agent(name="user_input_agent", seed="user_input_agent recovery phrase")
@@ -9,10 +11,14 @@ async def introduce_agent(ctx: Context):
     global USER_INPUT_AGENT_ADDRESS
     USER_INPUT_AGENT_ADDRESS = agent.address
 
-@agent.on_message(model=Message)
-async def bob_message_handler(ctx: Context, sender: str, msg: Message):
-    ctx.logger.info(f"Received message from {sender}: {msg.message}")
-    await ctx.send(alice.address, Message(message="hello there alice"))
+
+@agent.on_message(model=UserRawData)
+async def bob_message_handler(ctx: Context, sender: str, msg: UserRawData):
+    print(f"user_input_agent received message from {sender}: {msg.raw_user_data}")
+    pipe = UserDataExtractionPipeline("AIzaSyCO8QBl6pLBM3XIxh33voc0JlC5w0J6AAU")
+    out = pipe.process(msg.raw_user_data)
+    await ctx.send(sender, DictionaryReply(text=out), timeout=None, sync=True)
+
 
 def run():
     agent.run()
