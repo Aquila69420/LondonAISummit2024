@@ -2,3 +2,4 @@
 /p/.idea
 *.pyc
 src/.idea/misc.xml
+/src/.idea
