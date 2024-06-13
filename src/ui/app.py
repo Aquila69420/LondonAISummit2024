@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import *
 from datetime import datetime
 from flask_bootstrap import Bootstrap
 import pandas as pd
 
-rules=[] #pension scheme rules
+rules = None #pension scheme rules
 
 def compute(modified_data, selected_date):
     # do something with rules to produce the below output dictionary
@@ -66,7 +66,10 @@ def show_modified_data(dictionary):
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000  # 16 MB max file size
+app.secret_key = "khdfgsfkdsgfsjfhjsdfjskgf"
 Bootstrap(app)
+
+vars={}
 
 @app.errorhandler(400)
 def bad_request(error):
@@ -102,10 +105,50 @@ def index():
             file = request.files["pension_scheme"]
             print(file)
         if "process_data_button" in request.form:
+            print("process_data_button clicked")
             raw_data = request.form.get('user_data_input')
+            vars['raw_data'] = raw_data
             # modified_data = show_modified_data({raw_data})
             modified_data = show_modified_data({'Date of Birth': 'COULD NOT DETERMINE', 'Date joined company': 'COULD NOT DETERMINE', 'Gender': 'COULD NOT DETERMINE', 'Marital Status': 'Single', 'Pension Status': 'Pensioner', 'No. of Children': '2', 'Retirement Date': 'COULD NOT DETERMINE', 'Retirement Type': 'Normal', 'Current Pension Amount': '50000'})
+            vars['modified_data'] = modified_data
+            print('raw_data', vars.get('raw_data'))
+            print('modified_data', vars.get('modified_data'))
+        if "reevaluate_pension_button" in request.form:
+            global rules
+            print(request.form)
+            print("reevaluate_pension_button clicked")
+            pension_scheme_path = request.form.get('pension_scheme_path').strip() if request.form.get('pension_scheme_path')!=None else None
+            vars[pension_scheme_path]=pension_scheme_path
+            try:
+                rules = open(pension_scheme_path, "r")
+            except:
+                print("Unable to open pension scheme file.")
+            selected_date_str = request.form.get("selected_date")
+            if selected_date_str:
+                try:
+                    selected_date = datetime.strptime(selected_date_str, "%Y-%m-%d")
+                    # print("date", selected_date)
+                    vars['selected_date']=selected_date.strftime("%Y-%m-%d") if selected_date else None
+                    # print("date in vars", vars.get('selected_date'))
+                except ValueError:
+                    error_message = "Invalid date format. Please use MM-DD-YYYY."
+            raw_data = request.form.get('user_data_input')
+            modified_data = request.form.get('modified_data')
+            vars['modified_data'] = modified_data
+            if raw_data and selected_date and not error_message:
+                current_pension, reevaluated_pension, explanation = calculate_pension(modified_data, selected_date)
             
+            vars['current_pension']=current_pension
+            vars['reevaluated_pension']=reevaluated_pension
+            vars['explanation']=explanation
+            
+            print('pension_scheme_path', vars.get('pension_scheme_path'))
+            print('selected_date', vars.get('selected_date'))
+            print('raw_data', vars.get('raw_data'))
+            print('modified_data', vars.get('modified_data'))
+            print('current_pension', vars.get('current_pension'))
+            print('reevaluated_pension', vars.get('reevaluated_pension'))
+            print('explanation', vars.get('explanation'))
 
         if "user_data" in request.files: # Upload user data
             uploaded_file = request.files["user_data"]
@@ -118,25 +161,9 @@ def index():
                     modified_data = show_modified_data({'Date of Birth': 'COULD NOT DETERMINE', 'Date joined company': 'COULD NOT DETERMINE', 'Gender': 'COULD NOT DETERMINE', 'Marital Status': 'Single', 'Pension Status': 'Pensioner', 'No. of Children': '2', 'Retirement Date': 'COULD NOT DETERMINE', 'Retirement Type': 'Normal', 'Current Pension Amount': '50000'})
                 else:
                     error_message = error_message or "Error processing user data."
-
-    if request.method == "GET":
-        # if "process_data_button" in request.form:
-        #     raw_data = request.form.get('user_data_input')
-        #     modified_data = show_modified_data({raw_data})
-        if "reevaluate_pension_button" in request.form:
-            pension_scheme_path = request.form.get('pension_scheme_path').trim()
-            selected_date_str = request.form.get("selected_date")
-            if selected_date_str:
-                try:
-                    selected_date = datetime.strptime(selected_date_str, "%d-%m-%Y")
-                except ValueError:
-                    error_message = "Invalid date format. Please use DD-MM-YYYY."
-            modified_data = request.form.get('modified_data')
-            if raw_data and selected_date and not error_message:
-                current_pension, reevaluated_pension, explanation = calculate_pension(modified_data, selected_date)
-
-    return render_template("index.html", raw_data=raw_data, modified_data=modified_data, 
-                            selected_date=selected_date.strftime("%d-%m-%Y") if selected_date else None,
+    # print('vars date', vars.get('selected_date'))
+    return render_template("index.html", raw_data=vars.get('raw_data'), modified_data=vars.get('modified_data'), 
+                            selected_date=vars.get('selected_date'),
                             current_pension=current_pension, reevaluated_pension=reevaluated_pension,
                             explanation=explanation, error_message=error_message)
 
