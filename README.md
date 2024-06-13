@@ -1,1 +1,1 @@
-# HackAI2024
+# LondonAISummit2024
