@@ -1,5 +1,5 @@
 from uagents import Agent, Context
-from data_structures import UserRawData, DictionaryReply
+from .data_structures import UserRawData, DictionaryReply
 from ai import UserDataExtractionPipeline
 
 USER_INPUT_AGENT_ADDRESS: str | None = None
@@ -8,6 +8,7 @@ agent = Agent(name="user_input_agent", seed="user_input_agent recovery phrase")
 
 @agent.on_event("startup")
 async def introduce_agent(ctx: Context):
+    print("user_input_agent started")
     global USER_INPUT_AGENT_ADDRESS
     USER_INPUT_AGENT_ADDRESS = agent.address
 

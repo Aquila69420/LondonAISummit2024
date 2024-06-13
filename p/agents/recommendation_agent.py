@@ -1,5 +1,5 @@
 from uagents import Agent, Context
-from data_structures import DataForRecommendation, TextReply
+from .data_structures import DataForRecommendation, TextReply
 from ai import RecommendRevaluationPipeline
 
 RECOMMENDATION_AGENT_ADDRESS: str | None = None
@@ -8,6 +8,7 @@ agent = Agent(name="recommendation_agent", seed="recommendation_agent recovery p
 
 @agent.on_event("startup")
 async def introduce_agent(ctx: Context):
+    print("recommendation_agent started")
     global RECOMMENDATION_AGENT_ADDRESS
     RECOMMENDATION_AGENT_ADDRESS = agent.address
 

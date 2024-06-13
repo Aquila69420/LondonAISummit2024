@@ -1,5 +1,5 @@
 from uagents import Agent, Context
-from data_structures import PensionSchemeData, TextReply
+from .data_structures import PensionSchemeData, TextReply
 from ai import UserDataExtractionPipeline
 
 PENSION_SCHEME_ADDRESS: str | None = None
@@ -8,6 +8,7 @@ agent = Agent(name="pension_scheme_agent", seed="pension_scheme_agent recovery p
 
 @agent.on_event("startup")
 async def introduce_agent(ctx: Context):
+    print("pension_scheme_agent started")
     global PENSION_SCHEME_ADDRESS
     PENSION_SCHEME_ADDRESS = agent.address
 
