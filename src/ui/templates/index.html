@@ -19,10 +19,6 @@
       <div class="col-md-12">
         <div class="d-flex justify-content-between align-items-center mb-3" style="background-color: #293764; color: #fff; padding: 10px; border-radius: 5px;">
           <div class="btn-group">
-            <!-- <form method="POST" enctype="multipart/form-data">
-              <button type="submit" class="file file-sm file-outline-light" onclick="document.getElementById('pension_scheme').click()">Upload Pension Scheme</button>
-              <input type="file" id="pension_scheme" name="pension_scheme" accept=".pdf,.docx,.txt,.doc" style="display: none;">
-            </form> -->
             <form method="post">
               <input type="text" id="pension_scheme_path" name="pension_scheme_path" class="form-control" placeholder="Input pension scheme absolute file path here" style="width: 500px; height: 30px;"></input>
               <input type="date" class="form-control form-control-sm" style="width: auto; margin-right: 10px;" id="selected_date" name="selected_date" value="{{ selected_date }}">
@@ -30,19 +26,14 @@
               <div class="col-md-6">
                 <div class="datacard mb-3">
                   <div class="card-header align-button-header">  <h4>Raw User Data</h4>
-                    <!-- <form action="/" method="post" enctype="multipart/form-data">
-                        <button class="file file-sm file-outline-light" style="margin-left: 800px; height: 30px;" onclick="triggerFileUpload()">Upload User Data</button>
-                        <input type="file" id="user_data" name="user_data" accept=".xlsx,.csv,.txt,.docx,.doc" style="display: none;">
-                      </form> -->
                     <form action="/" method="post">
                       <input type="text" id="user_data_input" name="user_data_input" class="form-control" placeholder="Input user data here" style="height: 30px;">
                       <button class="btn btn-sm btn-primary" style="margin-left: 50px; height: 40px;" id="process_data_button" name="process_data_button">Process Data</button>
                     </form>
                   </div>
-                  
                 </div>
               </div>
-            
+
               </br>
               </br> 
             
@@ -74,6 +65,7 @@
               </br>
             
               <label id="current_pension" style="margin-left: 130px; background-color: #293764; color: #fff; padding: 10px; border-radius: 5px;">Current Pension: £{{ current_pension }}</label> <label id="reevaluated_pension" style="margin-left: 130px; background-color: #293764; color: #fff; padding: 10px; border-radius: 5px;">Re-evaluated Pension: £{{ reevaluated_pension }}</label> 
+              
               </br>
               </br>
               
