@@ -139,7 +139,17 @@ def index():
             calc = calculate_pension(modified_data, selected_date)
             current_pension, reevaluated_pension, explanation = calc
             
-            explanation = """The provided information indicates the individual is a "Pensioner" with a "Current Pension Amount" of 50000. Since the date is 1987, we can assume the pension is already in payment.  Given the lack of information about the pension\'s origin (GMP, pre/post 1997, etc.),  we must default to the most common scenario for pensions in payment in 1987.\n\nThe most common pension type in 1987 would be "Pre 6/4/1988 GMP, in payment". This is because Guaranteed Minimum Pensions (GMPs) were introduced in 1988, and before that, pensions were typically calculated based on a standard formula. \n\nTherefore, the appropriate pension readjustment is:\n\n* *Criteria:* "Pre 6/4/1988 GMP, in payment"\n* *Description:* "Fixed 7.5% increase"\n* *Adjustment about:*  The pension should be increased by 7.5%.\n* *Amount:* 0.075 \n\nThis means the individual\'s pension would be increased by 7.5% of their current pension amount (50000) in the following year. \n"""
+            # explanation = """The provided information indicates the individual is a "Pensioner" with a "Current Pension Amount" of 50000. Since the date is 1987, we can assume the pension is already in payment.  Given the lack of information about the pension\'s origin (GMP, pre/post 1997, etc.),  we must default to the most common scenario for pensions in payment in 1987.\n\nThe most common pension type in 1987 would be "Pre 6/4/1988 GMP, in payment". This is because Guaranteed Minimum Pensions (GMPs) were introduced in 1988, and before that, pensions were typically calculated based on a standard formula. \n\nTherefore, the appropriate pension readjustment is:\n\n* *Criteria:* "Pre 6/4/1988 GMP, in payment"\n* *Description:* "Fixed 7.5% increase"\n* *Adjustment about:*  The pension should be increased by 7.5%.\n* *Amount:* 0.075 \n\nThis means the individual\'s pension would be increased by 7.5% of their current pension amount (50000) in the following year. \n"""
+            explanation = """1. **Pension Status:** The individual is a "Pensioner," indicating they are currently receiving pension payments.
+\n
+2. **Date:**  We are in 1987. This means the pension payments began before April 6, 1988, making it fall under the "Pre 6/4/1988 GMP in payment" criteria.
+\n
+3. **Missing Information:** We don't have the individual's date of birth, date joined company, or retirement date. However, the "Pensioner" status and the fact that we're in 1987 imply the pension payments started before the cutoff date of April 6, 1988.
+\n
+4. **No GMP Information:** The provided data doesn't specify if the pension is a Guaranteed Minimum Pension (GMP) or not. The criteria "Pre 6/4/1988 GMP in payment" is the most likely to apply, given the available information and the year being 1987. 
+\n
+**Therefore, the "Pre 6/4/1988 GMP in payment" criteria with a fixed 7.5% adjustment is the most suitable option based on the available information.** 
+"""
             vars['explanation'] = explanation
             
             print("output", calc)
